@@ -1,0 +1,3 @@
+[submodule "cppwebserver"]
+	path = cppwebserver
+	url = https://tomcon25@bitbucket.org/tomcon25/cppwebserver.git

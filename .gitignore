@@ -1,0 +1,10 @@
+.*
+!/.gitignore
+
+Debug
+
+.log
+.tlog
+.obj
+.exe
+.pdb
