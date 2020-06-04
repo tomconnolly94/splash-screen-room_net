@@ -19,8 +19,20 @@
     <Filter Include="Source Files\HtmlRendering">
       <UniqueIdentifier>{0ecfbfcb-ec15-4f3c-ac8a-7293c4771a7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="html">
+    <Filter Include="web">
+      <UniqueIdentifier>{7742bf51-b510-4dfd-a948-508db276c865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="web\html">
       <UniqueIdentifier>{38a4a310-07e1-4141-bcbc-6f9773a1d023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="web\js">
+      <UniqueIdentifier>{01c3aef0-244e-4d6f-b40f-083dd547d469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="web\css">
+      <UniqueIdentifier>{f800a7e8-c2ed-4cdd-93f4-b5883377c2c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="web\images">
+      <UniqueIdentifier>{e8817288-7c5e-4ecd-a40e-8326f208c412}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,17 +61,27 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="html\index.html">
-      <Filter>html</Filter>
+    <None Include="web\html\error.html">
+      <Filter>web\html</Filter>
     </None>
-    <None Include="html\error.html">
-      <Filter>html</Filter>
+    <None Include="web\html\footer.html">
+      <Filter>web\html</Filter>
     </None>
-    <None Include="header.html">
-      <Filter>html</Filter>
+    <None Include="web\html\header.html">
+      <Filter>web\html</Filter>
     </None>
-    <None Include="html\footer.html">
-      <Filter>html</Filter>
+    <None Include="web\html\index.html">
+      <Filter>web\html</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="web\images\weeknd.png">
+      <Filter>web\images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="image.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

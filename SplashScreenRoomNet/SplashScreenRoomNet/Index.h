@@ -12,4 +12,5 @@ private:
 		index,
 		error
 	};
+	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
 };

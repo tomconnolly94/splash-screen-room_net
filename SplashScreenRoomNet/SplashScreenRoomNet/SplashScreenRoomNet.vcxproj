@@ -156,10 +156,16 @@
     <ClInclude Include="Index.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="header.html" />
-    <None Include="html\error.html" />
-    <None Include="html\footer.html" />
-    <None Include="html\index.html" />
+    <None Include="web\html\error.html" />
+    <None Include="web\html\footer.html" />
+    <None Include="web\html\header.html" />
+    <None Include="web\html\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="web\images\weeknd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="image.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
