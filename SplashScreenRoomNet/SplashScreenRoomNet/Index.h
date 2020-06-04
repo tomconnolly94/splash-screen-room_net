@@ -1,7 +1,15 @@
 #pragma once
 #include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
+#include "../../Jinja2CppLight/src/Jinja2CppLight.h"
+
 
 class Index {
 public:
 	static void HandleRequest(WebServer::http_request* r);
+private:
+	static void InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::map<std::string, std::string> values);
+	enum class PAGE {
+		index,
+		error
+	};
 };

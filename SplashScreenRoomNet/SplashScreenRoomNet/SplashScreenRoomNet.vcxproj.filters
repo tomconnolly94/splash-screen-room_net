@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\HtmRendering">
+      <UniqueIdentifier>{49814656-9d1a-4e06-9da9-1bb3f5259293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HtmlRendering">
+      <UniqueIdentifier>{0ecfbfcb-ec15-4f3c-ac8a-7293c4771a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="html">
+      <UniqueIdentifier>{38a4a310-07e1-4141-bcbc-6f9773a1d023}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SplashScreenRoomNet.cpp">
@@ -21,10 +30,36 @@
     <ClCompile Include="Index.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Jinja2CppLight\src\Jinja2CppLight.cpp">
+      <Filter>Source Files\HtmlRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp">
+      <Filter>Source Files\HtmlRendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Index.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h">
+      <Filter>Header Files\HtmRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h">
+      <Filter>Header Files\HtmRendering</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="html\index.html">
+      <Filter>html</Filter>
+    </None>
+    <None Include="html\error.html">
+      <Filter>html</Filter>
+    </None>
+    <None Include="header.html">
+      <Filter>html</Filter>
+    </None>
+    <None Include="html\footer.html">
+      <Filter>html</Filter>
+    </None>
   </ItemGroup>
 </Project>

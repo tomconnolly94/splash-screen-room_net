@@ -1,3 +1,9 @@
 [submodule "cppwebserver"]
 	path = cppwebserver
 	url = https://tomcon25@bitbucket.org/tomcon25/cppwebserver.git
+[submodule "cppcommontproj"]
+	path = cppcommontproj
+	url = https://tomcon25@bitbucket.org/tomcon25/cppcommontproj.git
+[submodule "Jinja2CppLight"]
+	path = Jinja2CppLight
+	url = https://github.com/hughperkins/Jinja2CppLight.git
