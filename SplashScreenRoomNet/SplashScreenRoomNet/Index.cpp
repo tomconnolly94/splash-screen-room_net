@@ -1,5 +1,9 @@
 //external includes
 #include <numeric>
+#include <iostream>
+#include <sstream>
+#include <iterator>
+#include <numeric>
 
 //internal includes
 #include "Index.h"
@@ -17,6 +21,7 @@ void Index::HandleRequest(WebServer::http_request* r)
     std::string htmlDir = "web/html/";
     std::string cssDir = "web/css/";
     std::string jsDir = "web/js/";
+    std::string imagesDir = "web/images/";
 
     std::map<std::string, std::string> templateValues;
     std::map<PAGE, std::string> pageMappings = { 
@@ -40,8 +45,8 @@ void Index::HandleRequest(WebServer::http_request* r)
             //cv::imencode(".png", img, buf);
             //auto base64_png = reinterpret_cast<const unsigned char*>(buf.data());
             //encoded_png = "data:image/jpeg;base64," + std::base64_encode(base64_png, buf.size());
-            r->response_.text_ = FileInterface::ReadStringFromFile("image.txt");
-            r->response_.content_type_ = "image/jpeg";
+            r->response_.text_ = CreateHtmlOutputForBinary( imagesDir + "weeknd.png");
+            r->response_.content_type_ = "image/png";
             
             return;
         }
@@ -136,4 +141,44 @@ bool Index::FileExists(WebServer::http_request* httpReq, std::string fileWithPat
         return false;
     }
     return true;
+}
+
+std::string Index::CreateHtmlOutputForBinary(const std::string& fullPath)
+{
+    const char* file_name = fullPath.c_str();
+
+    FILE* file_stream = fopen(file_name, "rb");
+
+    std::string file_str;
+
+    size_t file_size;
+
+
+    if (file_stream != nullptr)
+    {
+        std::vector<char> buffer;
+
+        //... other code here
+
+        if (file_stream != nullptr)
+        {
+            fseek(file_stream, 0, SEEK_END);
+            long file_length = ftell(file_stream);
+            rewind(file_stream);
+
+            buffer.resize(file_length);
+
+            file_size = fread(&buffer[0], 1, file_length, file_stream);
+
+            const char* s;
+            std::string delimiter = "";
+            copy(buffer.begin(), buffer.end(), std::ostream_iterator<int>(s, delimiter.c_str()));
+            return s;
+        }
+    }
+    else
+    {
+        printf("file_stream is null! file name -> %s\n", file_name);
+    }
+    return ""; //html;
 }

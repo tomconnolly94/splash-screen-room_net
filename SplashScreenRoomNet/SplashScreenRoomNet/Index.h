@@ -15,4 +15,5 @@ private:
 	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
 	static void FileNotFoundError(WebServer::http_request* r);
 	static bool FileExists(WebServer::http_request* httpReq, std::string fileWithPath);
+	static std::string CreateHtmlOutputForBinary(const std::string& fullPath);
 };
