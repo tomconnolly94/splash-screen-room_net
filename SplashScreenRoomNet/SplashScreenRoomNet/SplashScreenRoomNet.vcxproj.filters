@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp">
       <Filter>Source Files\HtmlRendering</Filter>
     </ClCompile>
+    <ClCompile Include="SplashScreenRoomNetUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Index.h">
@@ -58,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h">
       <Filter>Header Files\HtmRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashScreenRoomNetUtil.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,12 @@
     </None>
     <None Include="web\html\index.html">
       <Filter>web\html</Filter>
+    </None>
+    <None Include="web\css\main.css">
+      <Filter>web\css</Filter>
+    </None>
+    <None Include="web\js\main.js">
+      <Filter>web\js</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

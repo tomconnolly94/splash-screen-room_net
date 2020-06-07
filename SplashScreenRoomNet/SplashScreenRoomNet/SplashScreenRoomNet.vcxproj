@@ -149,17 +149,21 @@
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="SplashScreenRoomNet.cpp" />
+    <ClCompile Include="SplashScreenRoomNetUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h" />
     <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h" />
     <ClInclude Include="Index.h" />
+    <ClInclude Include="SplashScreenRoomNetUtil.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="web\css\main.css" />
     <None Include="web\html\error.html" />
     <None Include="web\html\footer.html" />
     <None Include="web\html\header.html" />
     <None Include="web\html\index.html" />
+    <None Include="web\js\main.js" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="web\images\weeknd.png" />

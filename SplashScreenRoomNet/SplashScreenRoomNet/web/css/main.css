@@ -1,0 +1,7 @@
+body{
+    background-color: black;
+}
+
+div#first p {
+    background-color: #ff0000;
+}

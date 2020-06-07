@@ -4,6 +4,7 @@
 //internal includes
 #include "Index.h"
 #include "../../cppcommontproj/CppCommonTProj/FileInterface.h"
+#include "SplashScreenRoomNetUtil.h"
 
 //forward declarations
 class Socket {};
@@ -13,6 +14,9 @@ void Index::HandleRequest(WebServer::http_request* r)
     Socket s = *(r->s_);
     PAGE requestedPage;
     std::string requestPath = r->path_;
+    std::string htmlDir = "web/html/";
+    std::string cssDir = "web/css/";
+    std::string jsDir = "web/js/";
 
     std::map<std::string, std::string> templateValues;
     std::map<PAGE, std::string> pageMappings = { 
@@ -36,21 +40,36 @@ void Index::HandleRequest(WebServer::http_request* r)
             //cv::imencode(".png", img, buf);
             //auto base64_png = reinterpret_cast<const unsigned char*>(buf.data());
             //encoded_png = "data:image/jpeg;base64," + std::base64_encode(base64_png, buf.size());
-            r->answer_ = FileInterface::ReadStringFromFile("image.txt");
-            r->content_type_ = "image/jpeg";
+            r->response_.text_ = FileInterface::ReadStringFromFile("image.txt");
+            r->response_.content_type_ = "image/jpeg";
             
             return;
         }
         else if (urlSection1 == "css")
         {
-
+            if (!FileExists(r, cssDir + urlSections[1]))
+            {
+                return;
+            }
+            std::string cssFileContent = FileInterface::ReadStringFromFile((cssDir + urlSections[1]).c_str());
+            r->response_.text_ = cssFileContent;
+            r->response_.content_type_ = "text/css";
+            return;
         }
         else if (urlSection1 == "js")
         {
-
+            if (!FileExists(r, jsDir + urlSections[1]))
+            {
+                return;
+            }
+            std::string jsFileContent = FileInterface::ReadStringFromFile((jsDir + urlSections[1]).c_str());
+            r->response_.text_ = jsFileContent;
+            r->response_.content_type_ = "application/javascript";
+            return;
         }
     }
     else {
+        //only accept requests to "/"
         if (r->path_ == "/") 
         {
             requestedPage = PAGE::index;
@@ -60,21 +79,21 @@ void Index::HandleRequest(WebServer::http_request* r)
         {
             requestedPage = PAGE::error;
         }
+
+        //add page sections to vector
+        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "header.html").c_str()));
+        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + pageMappings[requestedPage]).c_str()));
+        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "footer.html").c_str()));
+
+        //concatenate page Sections and pass them into the templating engine
+        Jinja2CppLight::Template pageTemplate(std::accumulate(pageSections.begin(), pageSections.end(), std::string("")));
+        Index::InsertTemplateValues(&pageTemplate, templateValues);
+
+        //assign page response
+        r->response_.text_ = pageTemplate.render();
+        r->response_.content_type_ = "text/html";
+        return;
     }
-
-
-    //add page sections to vector
-    std::string htmlDir = "web/html/";
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "header.html").c_str()));
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + pageMappings[requestedPage]).c_str()));
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "footer.html").c_str()));
-
-    //concatenate page Sections and pass them into the templating engine
-    Jinja2CppLight::Template pageTemplate(std::accumulate(pageSections.begin(), pageSections.end(), std::string("")));
-    Index::InsertTemplateValues(&pageTemplate, templateValues);
-    
-    //assign page response
-    r->answer_ = pageTemplate.render();;
 }
 
 std::vector<std::string> Index::InterpretUrlSections(std::string urlPath)
@@ -102,4 +121,19 @@ void Index::InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::m
     {
         jinjaTemplate->setValue(value.first, value.second);
     }
+}
+
+void Index::FileNotFoundError(WebServer::http_request* httpReq)
+{
+    httpReq->status_ = "404 Not Found";
+}
+
+bool Index::FileExists(WebServer::http_request* httpReq, std::string fileWithPath)
+{
+    if (!SplashScreenRoomNetUtil::FileExists(fileWithPath))
+    {
+        FileNotFoundError(httpReq);
+        return false;
+    }
+    return true;
 }
