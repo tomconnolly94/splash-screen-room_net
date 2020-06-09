@@ -1,0 +1,11 @@
+{
+  "name": "splash-screen-room_net",
+  "version": "1.0.0",
+  "main": "splash-screen-room_net/SplashScreenRoomNet/x64/Release/SplashScreenRoomNet.exe",
+  "repository": "https://tomcon25@bitbucket.org/tomcon25/splash-screen-room_net.git",
+  "author": "tom <tom.connolly@protonmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.5.0"
+  }
+}

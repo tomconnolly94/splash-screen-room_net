@@ -1,10 +1,15 @@
 .*
 !/.gitignore
 
+x86
+x64
 Debug
+Release
 
 .log
 .tlog
 .obj
 .exe
 .pdb
+
+node_modules
