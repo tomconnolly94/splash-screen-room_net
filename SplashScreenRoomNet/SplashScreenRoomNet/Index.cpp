@@ -38,14 +38,11 @@ void Index::HandleRequest(WebServer::http_request* r)
 
         if (urlSection1 == "images")
         {
-            //std::string encoded_png;
-            //Mat img; // Load an image here
-
-            //std::vector<std::uchar> buf;
-            //cv::imencode(".png", img, buf);
-            //auto base64_png = reinterpret_cast<const unsigned char*>(buf.data());
-            //encoded_png = "data:image/jpeg;base64," + std::base64_encode(base64_png, buf.size());
-            r->response_.text_ = CreateHtmlOutputForBinary( imagesDir + "weeknd.png");
+            if (!FileExists(r, imagesDir + urlSections[1]))
+            {
+                return;
+            }
+            r->response_.text_ = CreateHtmlOutputForBinary((imagesDir + urlSections[1]).c_str());
             r->response_.content_type_ = "image/png";
             
             return;
@@ -72,6 +69,10 @@ void Index::HandleRequest(WebServer::http_request* r)
             r->response_.content_type_ = "application/javascript";
             return;
         }
+        else
+        {
+            requestedPage = PAGE::error;
+        }
     }
     else {
         //only accept requests to "/"
@@ -79,6 +80,17 @@ void Index::HandleRequest(WebServer::http_request* r)
         {
             requestedPage = PAGE::index;
             templateValues["avalue"] = "tom";
+        }
+        else if (r->path_ == "/favicon.ico")
+        {
+            if (!FileExists(r, imagesDir + "favicon.ico"))
+            {
+                return;
+            }
+            r->response_.text_ = CreateHtmlOutputForBinary((imagesDir + "/favicon.ico").c_str());
+            r->response_.content_type_ = "image/x-icon";
+
+            return;
         }
         else 
         {
@@ -157,24 +169,21 @@ std::string Index::CreateHtmlOutputForBinary(const std::string& fullPath)
     if (file_stream != nullptr)
     {
         std::vector<char> buffer;
+        fseek(file_stream, 0, SEEK_END);
+        long file_length = ftell(file_stream);
+        rewind(file_stream);
 
-        //... other code here
+        buffer.resize(file_length);
 
-        if (file_stream != nullptr)
+        file_size = fread(&buffer[0], 1, file_length, file_stream);
+            
+        std::stringstream ss;
+        for (size_t i = 0; i < buffer.size(); ++i)
         {
-            fseek(file_stream, 0, SEEK_END);
-            long file_length = ftell(file_stream);
-            rewind(file_stream);
-
-            buffer.resize(file_length);
-
-            file_size = fread(&buffer[0], 1, file_length, file_stream);
-
-            const char* s;
-            std::string delimiter = "";
-            copy(buffer.begin(), buffer.end(), std::ostream_iterator<int>(s, delimiter.c_str()));
-            return s;
+            ss << buffer[i];
         }
+        std::string s = ss.str();
+        return s;
     }
     else
     {

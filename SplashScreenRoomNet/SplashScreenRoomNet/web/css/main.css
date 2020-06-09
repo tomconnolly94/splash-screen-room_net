@@ -5,3 +5,7 @@ body{
 div#first p {
     background-color: #ff0000;
 }
+
+img {
+    width: 100%;
+}
