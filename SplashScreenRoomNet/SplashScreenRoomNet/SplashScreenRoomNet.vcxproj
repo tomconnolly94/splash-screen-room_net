@@ -153,14 +153,18 @@
   <ItemGroup>
     <ClCompile Include="..\..\Jinja2CppLight\src\Jinja2CppLight.cpp" />
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp" />
+    <ClCompile Include="HtmlPageServer.cpp" />
     <ClCompile Include="Index.cpp" />
+    <ClCompile Include="PageServer.cpp" />
     <ClCompile Include="SplashScreenRoomNet.cpp" />
     <ClCompile Include="SplashScreenRoomNetUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h" />
     <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h" />
+    <ClInclude Include="HtmlPageServer.h" />
     <ClInclude Include="Index.h" />
+    <ClInclude Include="PageServer.h" />
     <ClInclude Include="SplashScreenRoomNetUtil.h" />
   </ItemGroup>
   <ItemGroup>
@@ -173,9 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="web\images\weeknd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="image.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

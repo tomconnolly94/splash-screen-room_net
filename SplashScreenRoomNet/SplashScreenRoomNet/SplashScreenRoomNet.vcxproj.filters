@@ -34,6 +34,12 @@
     <Filter Include="web\images">
       <UniqueIdentifier>{e8817288-7c5e-4ecd-a40e-8326f208c412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\PageServer">
+      <UniqueIdentifier>{5bc88851-98fd-46af-8228-597db0a4ac34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PageServer">
+      <UniqueIdentifier>{8b847f7f-7efb-48cb-8af5-c1a56d85bb37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SplashScreenRoomNet.cpp">
@@ -51,6 +57,12 @@
     <ClCompile Include="SplashScreenRoomNetUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PageServer.cpp">
+      <Filter>Source Files\PageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlPageServer.cpp">
+      <Filter>Source Files\PageServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Index.h">
@@ -64,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="SplashScreenRoomNetUtil.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PageServer.h">
+      <Filter>Header Files\PageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlPageServer.h">
+      <Filter>Header Files\PageServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,10 +108,5 @@
     <Image Include="web\images\weeknd.png">
       <Filter>web\images</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="image.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

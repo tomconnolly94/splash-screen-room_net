@@ -9,9 +9,18 @@
 #include "Index.h"
 #include "../../cppcommontproj/CppCommonTProj/FileInterface.h"
 #include "SplashScreenRoomNetUtil.h"
+#include "PageServer.h"
+#include "HtmlPageServer.h"
+#include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
 
 //forward declarations
 class Socket {};
+
+void Index::ConfigureServer()
+{
+    //PageServer::Configure();
+    HtmlPageServer::Configure();
+}
 
 void Index::HandleRequest(WebServer::http_request* httpRequest)
 {
@@ -24,153 +33,11 @@ void Index::HandleRequest(WebServer::http_request* httpRequest)
     std::string imagesDir = "web/images/";
     std::string nodeModulesDir = "web/node_modules/";
 
-    std::map<std::string, std::string> templateValues;
-    std::map<PAGE, std::string> pageMappings = { 
-        {PAGE::index, "index.html"}, 
-        {PAGE::error, "error.html"} 
-    };
-    std::vector<std::string> pageSections;
+    PageServer::ServePage(requestPath, httpRequest->http_response);
 
-    std::vector<std::string> urlSections = Index::InterpretUrlSections(requestPath);
 
-    if (urlSections.size() > 1)
-    {
-        std::string urlSection1 = urlSections[0];
 
-        if (urlSection1 == "images")
-        {
-            if (!FileExists(httpRequest, imagesDir + urlSections[1]))
-            {
-                return;
-            }
-            httpRequest->response_.text_ = CreateHtmlOutputForBinary((imagesDir + urlSections[1]).c_str());
-            httpRequest->response_.content_type_ = "image/png";
-            
-            return;
-        }
-        else if (urlSection1 == "css")
-        {
-            if (!FileExists(httpRequest, cssDir + urlSections[1]))
-            {
-                return;
-            }
-            std::string cssFileContent = FileInterface::ReadStringFromFile((cssDir + urlSections[1]).c_str());
-            httpRequest->response_.text_ = cssFileContent;
-            httpRequest->response_.content_type_ = "text/css";
-            return;
-        }
-        else if (urlSection1 == "js")
-        {
-            if (!FileExists(httpRequest, jsDir + urlSections[1]))
-            {
-                return;
-            }
-            std::string jsFileContent = FileInterface::ReadStringFromFile((jsDir + urlSections[1]).c_str());
-            httpRequest->response_.text_ = jsFileContent;
-            httpRequest->response_.content_type_ = "application/javascript";
-            return;
-        }
-        else if (urlSection1 == "node-modules")
-        {
-            std::string file = urlSections[1];
-            std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(file);
-            std::string fileNameWithoutExtension = file.substr(0, file.size() - fileExtension.size() - 1);
-            std::string targetDir = nodeModulesDir + fileNameWithoutExtension + "/dist/" + fileExtension + "/";
-            std::string fileLocation = targetDir + fileNameWithoutExtension;
 
-            if (!FileExists(httpRequest, targetDir + file))
-            {
-                return;
-            }
-
-            std::string fileContent = FileInterface::ReadStringFromFile((fileLocation + "." + fileExtension).c_str());
-            httpRequest->response_.text_ = fileContent;
-
-            if (fileExtension == "js")
-            {
-                httpRequest->response_.content_type_ = "application/javascript";
-                return;
-            }
-            else if (fileExtension == "css")
-            {
-                httpRequest->response_.content_type_ = "text/css";
-                return;
-            }
-            else {
-                FileNotFoundError(httpRequest);
-                return;
-            }
-        }
-        else
-        {
-            FileNotFoundError(httpRequest);
-            return;
-        }
-    }
-    else {
-        //only accept requests to "/"
-        if (httpRequest->path_ == "/") 
-        {
-            requestedPage = PAGE::index;
-            templateValues["avalue"] = "tom";
-        }
-        else if (httpRequest->path_ == "/favicon.ico")
-        {
-            if (!FileExists(httpRequest, imagesDir + "favicon.ico"))
-            {
-                return;
-            }
-            httpRequest->response_.text_ = CreateHtmlOutputForBinary((imagesDir + "/favicon.ico").c_str());
-            httpRequest->response_.content_type_ = "image/x-icon";
-
-            return;
-        }
-        else 
-        {
-            requestedPage = PAGE::error;
-        }
-
-        //add page sections to vector
-        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "header.html").c_str()));
-        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + pageMappings[requestedPage]).c_str()));
-        pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "footer.html").c_str()));
-
-        //concatenate page Sections and pass them into the templating engine
-        Jinja2CppLight::Template pageTemplate(std::accumulate(pageSections.begin(), pageSections.end(), std::string("")));
-        Index::InsertTemplateValues(&pageTemplate, templateValues);
-
-        //assign page response
-        httpRequest->response_.text_ = pageTemplate.render();
-        httpRequest->response_.content_type_ = "text/html";
-        return;
-    }
-}
-
-std::vector<std::string> Index::InterpretUrlSections(std::string urlPath)
-{
-    //access sections of request path
-    std::string delimiter = "/";
-    std::vector<std::string> sectionsOfUrl;
-
-    size_t pos = 0;
-    std::string urlSection;
-    while ((pos = urlPath.find(delimiter)) != std::string::npos) {
-        urlSection = urlPath.substr(0, pos);
-        if(urlSection != "") sectionsOfUrl.push_back(urlSection);
-        urlPath.erase(0, pos + delimiter.length());
-    }
-
-    if (urlSection != "") sectionsOfUrl.push_back(urlPath);
-
-    return sectionsOfUrl;
-}
-
-void Index::InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::map<std::string, std::string> values)
-{
-    for (auto const& value : values) 
-    {
-        jinjaTemplate->setValue(value.first, value.second);
-    }
 }
 
 void Index::FileNotFoundError(WebServer::http_request* httpReq)
