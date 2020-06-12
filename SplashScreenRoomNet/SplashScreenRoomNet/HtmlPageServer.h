@@ -4,7 +4,8 @@
 #include <string>
 #include <map>
 
-//external includes
+//internal includes
+#include "SubPageServer.h"
 
 //forward declarations
 namespace Jinja2CppLight 
@@ -20,7 +21,7 @@ namespace WebServer
 	}
 }
 
-class HtmlPageServer
+class HtmlPageServer : public SubPageServer
 {
 public:
 	//functions
@@ -28,11 +29,6 @@ public:
 	static void Configure();
 private:
 	//properties
-	enum class PAGE {
-		index,
-		error
-	};
-
 	static std::string htmlDir;
 	static std::map<PAGE, std::string> pageMappings;
 	static void InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::map<std::string, std::string> values);

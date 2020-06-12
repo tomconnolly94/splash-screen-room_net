@@ -13,6 +13,9 @@ namespace WebServer
 
 class PageServer {
 public:
+	//functions
 	static void ServePage(std::string requestPath, WebServer::http_request::http_response& httpResponse);
-	static std::vector<std::string> InterpretUrlSections(std::string urlPath, WebServer::http_request::http_response& httpResponse);
+	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
+	
+	//properties
 };

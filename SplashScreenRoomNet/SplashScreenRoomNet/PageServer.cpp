@@ -2,15 +2,13 @@
 //internal includes
 #include "PageServer.h"
 #include "HtmlPageServer.h"
+#include "StaticFileServer.h"
 #include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
 
 
-void PageServer::ServePage(std::string requestPath, WebServer::http_request::http_response& httpResponse) 
+bool PageServer::ServePage(std::string requestPath, WebServer::http_request::http_response& httpResponse) 
 {
-
-
 	std::vector<std::string> urlSections = InterpretUrlSections(requestPath);
-
 
 
     if (urlSections.size() > 1)
@@ -19,71 +17,23 @@ void PageServer::ServePage(std::string requestPath, WebServer::http_request::htt
 
         if (urlSection1 == "images")
         {
-            if (!FileExists(httpRequest, imagesDir + urlSections[1]))
-            {
-                return;
-            }
-            httpRequest->response_.text_ = CreateHtmlOutputForBinary((imagesDir + urlSections[1]).c_str());
-            httpRequest->response_.content_type_ = "image/png";
-
-            return;
+            return StaticFileServer::ServeImage(urlSections[0], httpResponse);
         }
         else if (urlSection1 == "css")
         {
-            if (!FileExists(httpRequest, cssDir + urlSections[1]))
-            {
-                return;
-            }
-            std::string cssFileContent = FileInterface::ReadStringFromFile((cssDir + urlSections[1]).c_str());
-            httpRequest->response_.text_ = cssFileContent;
-            httpRequest->response_.content_type_ = "text/css";
-            return;
+            return StaticFileServer::ServeFile(urlSections[0], httpResponse, SubPageServer::CONTENT_TYPE::textCss);
         }
         else if (urlSection1 == "js")
         {
-            if (!FileExists(httpRequest, jsDir + urlSections[1]))
-            {
-                return;
-            }
-            std::string jsFileContent = FileInterface::ReadStringFromFile((jsDir + urlSections[1]).c_str());
-            httpRequest->response_.text_ = jsFileContent;
-            httpRequest->response_.content_type_ = "application/javascript";
-            return;
+            return StaticFileServer::ServeFile(urlSections[0], httpResponse, SubPageServer::CONTENT_TYPE::appJs);
         }
         else if (urlSection1 == "node-modules")
         {
-            std::string file = urlSections[1];
-            std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(file);
-            std::string fileNameWithoutExtension = file.substr(0, file.size() - fileExtension.size() - 1);
-            std::string targetDir = nodeModulesDir + fileNameWithoutExtension + "/dist/" + fileExtension + "/";
-            std::string fileLocation = targetDir + fileNameWithoutExtension;
-
-            if (!FileExists(httpRequest, targetDir + file))
-            {
-                return;
-            }
-
-            std::string fileContent = FileInterface::ReadStringFromFile((fileLocation + "." + fileExtension).c_str());
-            httpRequest->response_.text_ = fileContent;
-
-            if (fileExtension == "js")
-            {
-                httpRequest->response_.content_type_ = "application/javascript";
-                return;
-            }
-            else if (fileExtension == "css")
-            {
-                httpRequest->response_.content_type_ = "text/css";
-                return;
-            }
-            else {
-                FileNotFoundError(httpRequest);
-                return;
-            }
+            return StaticFileServer::ServeExternalLibFile(urlSections[0], httpResponse, SubPageServer::CONTENT_TYPE::appJs);
         }
         else
         {
-            FileNotFoundError(httpRequest);
+            //FileNotFoundError(httpRequest);
             return;
         }
     }
@@ -91,9 +41,7 @@ void PageServer::ServePage(std::string requestPath, WebServer::http_request::htt
         //only accept requests to "/"
         if (requestPath == "/")
         {
-            requestedPage = PAGE::index;
-
-            HtmlPageServer::serveHtmlPage(requestPath, *);
+            HtmlPageServer::ServeHtmlPage(requestPath, httpResponse);
         }
         else if (httpRequest->path_ == "/favicon.ico")
         {

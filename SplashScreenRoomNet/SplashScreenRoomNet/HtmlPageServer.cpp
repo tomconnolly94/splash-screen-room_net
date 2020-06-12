@@ -16,9 +16,9 @@ void HtmlPageServer::ServeHtmlPage(std::string requestPath, WebServer::http_requ
     std::map<std::string, std::string> templateValues = GetPageTemplateValues(requestedPage);
 
     //add page sections to vector
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "header.html").c_str()));
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + pageMappings[requestedPage]).c_str()));
-    pageSections.push_back(FileInterface::ReadStringFromFile((htmlDir + "footer.html").c_str()));
+    pageSections.push_back(FileInterface::ReadStringFromFile((directoryMappings[DIRECTORY::htmlDir] + "header.html").c_str()));
+    pageSections.push_back(FileInterface::ReadStringFromFile((directoryMappings[DIRECTORY::htmlDir] + pageMappings[requestedPage]).c_str()));
+    pageSections.push_back(FileInterface::ReadStringFromFile((directoryMappings[DIRECTORY::htmlDir] + "footer.html").c_str()));
 
     //concatenate page Sections and pass them into the templating engine
     Jinja2CppLight::Template pageTemplate(std::accumulate(pageSections.begin(), pageSections.end(), std::string("")));
@@ -26,17 +26,17 @@ void HtmlPageServer::ServeHtmlPage(std::string requestPath, WebServer::http_requ
 
     //assign page response
     http_response.text_ = pageTemplate.render();
-    http_response.content_type_ = "text/html";
+    http_response.content_type_ = contentTypeMappings[CONTENT_TYPE::textHtml];
     return;
 }
 
 void HtmlPageServer::Configure()
 {
+    ConfigureShared();
     HtmlPageServer::pageMappings = {
         {HtmlPageServer::PAGE::index, "index.html"},
         {HtmlPageServer::PAGE::error, "error.html"}
     };
-    HtmlPageServer::htmlDir = "web/html/";
 }
 
 void HtmlPageServer::InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::map<std::string, std::string> values)

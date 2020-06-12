@@ -63,6 +63,12 @@
     <ClCompile Include="HtmlPageServer.cpp">
       <Filter>Source Files\PageServer</Filter>
     </ClCompile>
+    <ClCompile Include="SubPageServer.cpp">
+      <Filter>Source Files\PageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticFileServer.cpp">
+      <Filter>Source Files\PageServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Index.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files\PageServer</Filter>
     </ClInclude>
     <ClInclude Include="HtmlPageServer.h">
+      <Filter>Header Files\PageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="SubPageServer.h">
+      <Filter>Header Files\PageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticFileServer.h">
       <Filter>Header Files\PageServer</Filter>
     </ClInclude>
   </ItemGroup>
