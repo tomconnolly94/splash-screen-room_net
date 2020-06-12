@@ -13,13 +13,13 @@ namespace Jinja2CppLight
 	class Template;
 }
 
-namespace WebServer
+class WebServer
 {
-	namespace http_request
+	struct http_request
 	{
 		class http_response;
-	}
-}
+	};
+};
 
 class HtmlPageServer : public SubPageServer
 {

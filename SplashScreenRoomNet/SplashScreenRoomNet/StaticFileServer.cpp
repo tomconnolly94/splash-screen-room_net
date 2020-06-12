@@ -1,20 +1,25 @@
 
+//external includes
+#include <sstream>
+
 //internal includes
 #include "StaticFileServer.h"
 #include "SplashScreenRoomNetUtil.h"
 #include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
 #include "../../cppcommontproj/CppCommonTProj/FileInterface.h"
 
-bool StaticFileServer::ServeImage(std::string requestedPage, WebServer::http_request::http_response& response)
+bool StaticFileServer::ServeImage(std::string requestedImage, WebServer::http_request::http_response &response)
 {
-    std::string targetFile = directoryMappings[DIRECTORY::imagesDir] + requestedPage;
+    std::string targetFile = directoryMappings[DIRECTORY::imagesDir] + requestedImage;
+
+    CONTENT_TYPE contentType = extensionContentTypeMappings[SplashScreenRoomNetUtil::GetExtension(requestedImage)];
 
     if (!SplashScreenRoomNetUtil::FileExists(targetFile))
     {
         return false;
     }
     response.text_ = CreateHtmlOutputForBinary(targetFile.c_str());
-    response.content_type_ = "image/png";
+    response.content_type_ = contentTypeMappings[contentType];
 
     return true;
 }
@@ -30,14 +35,14 @@ bool StaticFileServer::ServeFile(std::string requestedPage, WebServer::http_requ
         return false;
     }
     response.text_ = FileInterface::ReadStringFromFile(targetFile.c_str());
-    response.content_type_ = "image/png";
+    response.content_type_ = contentTypeMappings[contentType];
 
     return true;
 }
 
 
 
-bool StaticFileServer::ServeExternaLibFile(std::string requestedPage, WebServer::http_request::http_response& response, SubPageServer::CONTENT_TYPE contentType)
+bool StaticFileServer::ServeExternalLibFile(std::string requestedPage, WebServer::http_request::http_response& response, SubPageServer::CONTENT_TYPE contentType)
 {
     std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedPage);
     std::string fileNameWithoutExtension = requestedPage.substr(0, requestedPage.size() - fileExtension.size() - 1);
@@ -55,12 +60,12 @@ bool StaticFileServer::ServeExternaLibFile(std::string requestedPage, WebServer:
     if (fileExtension == "js")
     {
         response.content_type_ = "application/javascript";
-        return;
+        return true;
     }
     else if (fileExtension == "css")
     {
         response.content_type_ = "text/css";
-        return;
+        return true;
     }
     else {
         //FileNotFoundError(httpRequest);

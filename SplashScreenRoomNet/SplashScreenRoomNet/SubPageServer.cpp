@@ -22,13 +22,19 @@ void SubPageServer::ConfigureShared()
 		{ CONTENT_TYPE::imageIcon, "image/icon"},
 	};
 
-
-
 	contentTypeDirectoryMappings = {
 		{ CONTENT_TYPE::textHtml, DIRECTORY::htmlDir },
 		{ CONTENT_TYPE::textCss, DIRECTORY::cssDir },
 		{ CONTENT_TYPE::appJs, DIRECTORY::jsDir },
 		{ CONTENT_TYPE::imagePng, DIRECTORY::imagesDir },
 		{ CONTENT_TYPE::imageIcon, DIRECTORY::imagesDir },
+	};
+
+	extensionContentTypeMappings = {
+		{ "html", CONTENT_TYPE::textHtml },
+		{ "css", CONTENT_TYPE::textCss },
+		{ "js", CONTENT_TYPE::appJs },
+		{ "png", CONTENT_TYPE::imagePng },
+		{ "ico", CONTENT_TYPE::imageIcon },
 	};
 }

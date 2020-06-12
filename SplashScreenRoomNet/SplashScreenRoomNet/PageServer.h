@@ -3,19 +3,23 @@
 #include <string>
 #include <vector>
 
-namespace WebServer
+#include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
+
+//forward declarations
+class WebServer
 {
-	namespace http_request
+	struct http_request
 	{
-		class http_response;
-	}
-}
+		struct http_response;
+	};
+};
 
 class PageServer {
 public:
 	//functions
-	static void ServePage(std::string requestPath, WebServer::http_request::http_response& httpResponse);
+	static bool ServePage(std::string requestPath, WebServer::http_request::http_response &httpResponse);
 	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
-	
+	static void Configure();
 	//properties
+	static std::vector<std::string> specialPaths;
 };

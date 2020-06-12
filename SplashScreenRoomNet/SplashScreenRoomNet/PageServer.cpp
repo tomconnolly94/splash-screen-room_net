@@ -6,7 +6,7 @@
 #include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
 
 
-bool PageServer::ServePage(std::string requestPath, WebServer::http_request::http_response& httpResponse) 
+bool PageServer::ServePage(std::string requestPath, WebServer::http_request::http_response &httpResponse) 
 {
 	std::vector<std::string> urlSections = InterpretUrlSections(requestPath);
 
@@ -31,11 +31,6 @@ bool PageServer::ServePage(std::string requestPath, WebServer::http_request::htt
         {
             return StaticFileServer::ServeExternalLibFile(urlSections[0], httpResponse, SubPageServer::CONTENT_TYPE::appJs);
         }
-        else
-        {
-            //FileNotFoundError(httpRequest);
-            return;
-        }
     }
     else {
         //only accept requests to "/"
@@ -43,22 +38,12 @@ bool PageServer::ServePage(std::string requestPath, WebServer::http_request::htt
         {
             HtmlPageServer::ServeHtmlPage(requestPath, httpResponse);
         }
-        else if (httpRequest->path_ == "/favicon.ico")
+        else if (std::find(specialPaths.begin(), specialPaths.end(), "abc") != specialPaths.end())
         {
-            if (!FileExists(httpRequest, imagesDir + "favicon.ico"))
-            {
-                return;
-            }
-            httpRequest->response_.text_ = CreateHtmlOutputForBinary((imagesDir + "/favicon.ico").c_str());
-            httpRequest->response_.content_type_ = "image/x-icon";
-
-            return;
+            return StaticFileServer::ServeImage(requestPath, httpResponse);
         }
-        else
-        {
-            requestedPage = PAGE::error;
-        }
-
+    }
+    return false;
 }
 
 std::vector<std::string> PageServer::InterpretUrlSections(std::string urlPath)
@@ -78,4 +63,11 @@ std::vector<std::string> PageServer::InterpretUrlSections(std::string urlPath)
     if (urlSection != "") sectionsOfUrl.push_back(urlPath);
 
     return sectionsOfUrl;
+}
+
+void PageServer::Configure()
+{
+    specialPaths = {
+        "/favicon.ico"
+    };
 }

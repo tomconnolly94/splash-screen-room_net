@@ -9,5 +9,4 @@ class SplashScreenRoomNetUtil : Util
 public:
 	static bool FileExists(const std::string& name);
 	static std::string GetExtension(const std::string input);
-	static bool FileExists(, std::string fileWithPath);
 };
