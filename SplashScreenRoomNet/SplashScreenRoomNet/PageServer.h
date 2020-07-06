@@ -1,23 +1,16 @@
 #pragma once
+
 //external includes
 #include <string>
 #include <vector>
 
-#include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
-
-//forward declarations
-class WebServer
-{
-	struct http_request
-	{
-		struct http_response;
-	};
-};
+//internal includes
+#include "HttpResponse.h"
 
 class PageServer {
 public:
 	//functions
-	static bool ServePage(std::string requestPath, WebServer::http_request::http_response &httpResponse);
+	static HttpResponse* ServePage(std::string requestPath);
 	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
 	static void Configure();
 	//properties

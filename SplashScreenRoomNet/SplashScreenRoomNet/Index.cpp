@@ -1,14 +1,11 @@
 //external includes
+#include "../../cppwebserver/CppWebServer/CppWebServer/socket/src/Socket.h"
 
 //internal includes
 #include "Index.h"
 #include "PageServer.h"
 #include "HtmlPageServer.h"
-#include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
-#include "../../Jinja2CppLight/src/Jinja2CppLight.h"
-
-//forward declarations
-class Socket {};
+#include "HttpResponse.h"
 
 void Index::ConfigureServer()
 {
@@ -16,20 +13,20 @@ void Index::ConfigureServer()
     HtmlPageServer::Configure();
 }
 
-void Index::HandleRequest(WebServer::http_request* httpRequest)
+void Index::HandleRequest(CppWebServer::http_request* httpRequest)
 {
     Socket s = *(httpRequest->s_);
     std::string requestPath = httpRequest->path_;
 
-    bool responseSuccess = PageServer::ServePage(requestPath, httpRequest->response_);
+    HttpResponse* httpResponse = PageServer::ServePage(requestPath);
 
-    if (!responseSuccess)
+    if (!httpResponse->ResponseSuccessful())
     {
         httpRequest->status_ = "404 Not Found";
     }
-}
 
-void Index::FileNotFoundError(WebServer::http_request* httpReq)
-{
-    httpReq->status_ = "404 Not Found";
+    httpRequest->response_ = {
+        httpResponse->GetContentType(),
+        httpResponse->GetContent()
+    };
 }

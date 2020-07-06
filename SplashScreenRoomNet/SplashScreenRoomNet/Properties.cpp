@@ -2,9 +2,9 @@
 
 
 //internal includes
-#include "SubPageServer.h"
+#include "Properties.h"
 
-void SubPageServer::ConfigureShared()
+void Properties::Configure()
 {
 	directoryMappings = {
 		{ DIRECTORY::htmlDir, "web/html"},
@@ -20,6 +20,7 @@ void SubPageServer::ConfigureShared()
 		{ CONTENT_TYPE::appJs, "application/javascript"},
 		{ CONTENT_TYPE::imagePng, "image/png"},
 		{ CONTENT_TYPE::imageIcon, "image/icon"},
+		{ CONTENT_TYPE::plaintext, "text/plain"},
 	};
 
 	contentTypeDirectoryMappings = {

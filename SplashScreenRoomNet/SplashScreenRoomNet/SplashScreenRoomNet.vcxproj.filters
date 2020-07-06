@@ -40,6 +40,12 @@
     <Filter Include="Source Files\PageServer">
       <UniqueIdentifier>{8b847f7f-7efb-48cb-8af5-c1a56d85bb37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structures">
+      <UniqueIdentifier>{00a3483b-26e3-4c9e-93f0-15934b821133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structures">
+      <UniqueIdentifier>{cbc7ba7c-1024-4242-a3e6-e2182ff2086c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SplashScreenRoomNet.cpp">
@@ -63,11 +69,17 @@
     <ClCompile Include="HtmlPageServer.cpp">
       <Filter>Source Files\PageServer</Filter>
     </ClCompile>
-    <ClCompile Include="SubPageServer.cpp">
-      <Filter>Source Files\PageServer</Filter>
-    </ClCompile>
     <ClCompile Include="StaticFileServer.cpp">
       <Filter>Source Files\PageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Properties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResponse.h">
+      <Filter>Header Files\Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResponse.cpp">
+      <Filter>Source Files\Structures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,13 +98,13 @@
     <ClInclude Include="PageServer.h">
       <Filter>Header Files\PageServer</Filter>
     </ClInclude>
-    <ClInclude Include="HtmlPageServer.h">
-      <Filter>Header Files\PageServer</Filter>
-    </ClInclude>
-    <ClInclude Include="SubPageServer.h">
-      <Filter>Header Files\PageServer</Filter>
-    </ClInclude>
     <ClInclude Include="StaticFileServer.h">
+      <Filter>Header Files\PageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlPageServer.h">
       <Filter>Header Files\PageServer</Filter>
     </ClInclude>
   </ItemGroup>

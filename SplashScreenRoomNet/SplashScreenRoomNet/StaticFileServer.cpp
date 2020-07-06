@@ -5,72 +5,64 @@
 //internal includes
 #include "StaticFileServer.h"
 #include "SplashScreenRoomNetUtil.h"
-#include "../../cppwebserver/CppWebServer/CppWebServer/WebServer.h"
 #include "../../cppcommontproj/CppCommonTProj/FileInterface.h"
 
-bool StaticFileServer::ServeImage(std::string requestedImage, WebServer::http_request::http_response &response)
+HttpResponse* StaticFileServer::ServeImage(std::string requestedImage)
 {
-    std::string targetFile = directoryMappings[DIRECTORY::imagesDir] + requestedImage;
+    std::string targetFile = Properties::directoryMappings[Properties::DIRECTORY::imagesDir] + requestedImage;
 
-    CONTENT_TYPE contentType = extensionContentTypeMappings[SplashScreenRoomNetUtil::GetExtension(requestedImage)];
+    Properties::CONTENT_TYPE contentType = Properties::extensionContentTypeMappings[SplashScreenRoomNetUtil::GetExtension(requestedImage)];
 
     if (!SplashScreenRoomNetUtil::FileExists(targetFile))
     {
-        return false;
+        return new HttpResponse(500, "Requested file does not exist.", Properties::contentTypeMappings[Properties::CONTENT_TYPE::plaintext]);
     }
-    response.text_ = CreateHtmlOutputForBinary(targetFile.c_str());
-    response.content_type_ = contentTypeMappings[contentType];
 
-    return true;
+    return new HttpResponse(202, CreateHtmlOutputForBinary(targetFile.c_str()), Properties::contentTypeMappings[contentType]);
 }
 
-
-bool StaticFileServer::ServeFile(std::string requestedPage, WebServer::http_request::http_response& response, SubPageServer::CONTENT_TYPE contentType)
+HttpResponse* StaticFileServer::ServeFile(std::string requestedPage, Properties::CONTENT_TYPE contentType)
 {
-    DIRECTORY targetDir = contentTypeDirectoryMappings[contentType];
-    std::string targetFile = directoryMappings[targetDir] + requestedPage;
+    Properties::DIRECTORY targetDir = Properties::contentTypeDirectoryMappings[contentType];
+    std::string targetFile = Properties::directoryMappings[targetDir] + requestedPage;
 
     if (!SplashScreenRoomNetUtil::FileExists(targetFile))
     {
-        return false;
+        return new HttpResponse(500, "Requested file does not exist.", Properties::contentTypeMappings[Properties::CONTENT_TYPE::plaintext]);
     }
-    response.text_ = FileInterface::ReadStringFromFile(targetFile.c_str());
-    response.content_type_ = contentTypeMappings[contentType];
 
-    return true;
+    return new HttpResponse(202, CreateHtmlOutputForBinary(targetFile.c_str()), Properties::contentTypeMappings[contentType]);
 }
 
-
-
-bool StaticFileServer::ServeExternalLibFile(std::string requestedPage, WebServer::http_request::http_response& response, SubPageServer::CONTENT_TYPE contentType)
+HttpResponse* StaticFileServer::ServeExternalLibFile(std::string requestedPage, Properties::CONTENT_TYPE contentType)
 {
     std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedPage);
     std::string fileNameWithoutExtension = requestedPage.substr(0, requestedPage.size() - fileExtension.size() - 1);
-    std::string targetDir = directoryMappings[DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/" + fileExtension + "/";
+    std::string targetDir = Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/" + fileExtension + "/";
     std::string fileLocation = targetDir + fileNameWithoutExtension;
 
     if (!SplashScreenRoomNetUtil::FileExists(targetDir + requestedPage))
     {
-        return false;
+        return new HttpResponse(500, "Requested file does not exist.", Properties::contentTypeMappings[Properties::CONTENT_TYPE::plaintext]);
     }
 
-    std::string fileContent = FileInterface::ReadStringFromFile((fileLocation + "." + fileExtension).c_str());
-    response.text_ = fileContent;
+    HttpResponse* httpResponse = new HttpResponse();
+
+    httpResponse->SetContent(FileInterface::ReadStringFromFile((fileLocation + "." + fileExtension).c_str()));
+    httpResponse->SetStatusCode(200);
 
     if (fileExtension == "js")
     {
-        response.content_type_ = "application/javascript";
-        return true;
+        httpResponse->SetContentType(Properties::CONTENT_TYPE::appJs);
     }
     else if (fileExtension == "css")
     {
-        response.content_type_ = "text/css";
-        return true;
+        httpResponse->SetContentType(Properties::CONTENT_TYPE::textCss);
     }
     else {
-        //FileNotFoundError(httpRequest);
-        return false;
+        httpResponse->SetError();
     }
+    return httpResponse;
 }
 
 std::string StaticFileServer::CreateHtmlOutputForBinary(const std::string& fullPath)

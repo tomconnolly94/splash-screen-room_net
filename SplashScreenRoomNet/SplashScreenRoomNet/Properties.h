@@ -2,32 +2,29 @@
 
 //external includes
 #include <map>
+#include <string>
 
-//internal includes
-#include "PageServer.h"
-
-class SubPageServer {
+static class Properties {
 public:
-	static void ConfigureShared();
+	static void Configure();
 
-	enum class CONTENT_TYPE
+	static enum class CONTENT_TYPE
 	{
 		textHtml,
 		textCss,
 		appJs,
 		imagePng,
-		imageIcon
+		imageIcon,
+		plaintext
 	};
 
-protected:
-
-	enum class PAGE 
+	static enum class PAGE
 	{
 		index,
 		error
 	};
 
-	enum class DIRECTORY
+	static enum class DIRECTORY
 	{
 		htmlDir,
 		cssDir,

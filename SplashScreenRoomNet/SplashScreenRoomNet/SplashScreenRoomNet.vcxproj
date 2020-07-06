@@ -154,12 +154,14 @@
     <ClCompile Include="..\..\Jinja2CppLight\src\Jinja2CppLight.cpp" />
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp" />
     <ClCompile Include="HtmlPageServer.cpp" />
+    <ClCompile Include="HttpResponse.cpp" />
+    <ClCompile Include="HttpResponse.h" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="PageServer.cpp" />
+    <ClCompile Include="Properties.cpp" />
     <ClCompile Include="SplashScreenRoomNet.cpp" />
     <ClCompile Include="SplashScreenRoomNetUtil.cpp" />
     <ClCompile Include="StaticFileServer.cpp" />
-    <ClCompile Include="SubPageServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h" />
@@ -167,9 +169,9 @@
     <ClInclude Include="HtmlPageServer.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="PageServer.h" />
+    <ClInclude Include="Properties.h" />
     <ClInclude Include="SplashScreenRoomNetUtil.h" />
     <ClInclude Include="StaticFileServer.h" />
-    <ClInclude Include="SubPageServer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web\css\main.css" />
