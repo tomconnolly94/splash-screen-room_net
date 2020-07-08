@@ -9,3 +9,7 @@ div#first p {
 img {
     width: 100%;
 }
+
+#main-container{
+    margin: auto 0;
+}

@@ -9,7 +9,6 @@
 
 void Index::HandleRequest(CppWebServer::http_request* httpRequest)
 {
-    //Socket s = *(httpRequest->s_);
     std::string requestPath = httpRequest->path_;
 
     HttpResponse* httpResponse = PageServer::ServePage(requestPath);
