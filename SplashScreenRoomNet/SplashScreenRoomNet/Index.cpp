@@ -1,5 +1,5 @@
 //external includes
-#include "../../cppwebserver/CppWebServer/CppWebServer/socket/src/Socket.h"
+//#include "../../cppwebserver/CppWebServer/CppWebServer/socket/src/Socket.h"
 
 //internal includes
 #include "Index.h"
@@ -7,15 +7,9 @@
 #include "HtmlPageServer.h"
 #include "HttpResponse.h"
 
-void Index::ConfigureServer()
-{
-    PageServer::Configure();
-    HtmlPageServer::Configure();
-}
-
 void Index::HandleRequest(CppWebServer::http_request* httpRequest)
 {
-    Socket s = *(httpRequest->s_);
+    //Socket s = *(httpRequest->s_);
     std::string requestPath = httpRequest->path_;
 
     HttpResponse* httpResponse = PageServer::ServePage(requestPath);

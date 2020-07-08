@@ -1,4 +1,15 @@
+//external include
+//#include <algorithm>
+
+//internal includes
 #include "HttpResponse.h"
+
+//initialise private static members
+std::vector<int> HttpResponse::_successCodeList = {
+	200,
+	201,
+	202
+};
 
 HttpResponse::HttpResponse()
 {
@@ -10,7 +21,6 @@ HttpResponse::HttpResponse(int statusCode, std::string content, std::string cont
 	_content(content),
 	_contentType(contentType) //validate this as above
 {
-	_successCodeList = { 200, 201, 202 };
 }
 
 void HttpResponse::SetStatusCode(int statusCode)

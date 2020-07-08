@@ -5,6 +5,11 @@
 #include "Properties.h"
 #include "StaticFileServer.h"
 
+//initialise private static members
+std::vector<std::string> PageServer::specialPaths = {
+        "/favicon.ico"
+};
+
 HttpResponse* PageServer::ServePage(std::string requestPath) 
 {
 	std::vector<std::string> urlSections = InterpretUrlSections(requestPath);
@@ -15,19 +20,19 @@ HttpResponse* PageServer::ServePage(std::string requestPath)
 
         if (urlSection1 == "images")
         {
-            return StaticFileServer::ServeImage(urlSections[0]);
+            return StaticFileServer::ServeImage(urlSections[1]);
         }
         else if (urlSection1 == "css")
         {
-            return StaticFileServer::ServeFile(urlSections[0], Properties::CONTENT_TYPE::textCss);
+            return StaticFileServer::ServeFile(urlSections[1], Properties::CONTENT_TYPE::textCss);
         }
         else if (urlSection1 == "js")
         {
-            return StaticFileServer::ServeFile(urlSections[0], Properties::CONTENT_TYPE::appJs);
+            return StaticFileServer::ServeFile(urlSections[1], Properties::CONTENT_TYPE::appJs);
         }
         else if (urlSection1 == "node-modules")
         {
-            return StaticFileServer::ServeExternalLibFile(urlSections[0], Properties::CONTENT_TYPE::appJs);
+            return StaticFileServer::ServeExternalLibFile(urlSections[1], Properties::CONTENT_TYPE::appJs);
         }
     }
     else {
@@ -61,11 +66,4 @@ std::vector<std::string> PageServer::InterpretUrlSections(std::string urlPath)
     if (urlSection != "") sectionsOfUrl.push_back(urlPath);
 
     return sectionsOfUrl;
-}
-
-void PageServer::Configure()
-{
-    specialPaths = {
-        "/favicon.ico"
-    };
 }

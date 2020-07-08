@@ -8,14 +8,22 @@
 #include "../../cppcommontproj/CppCommonTProj/FileInterface.h"
 #include "Properties.h"
 
+//initialise private static members
+std::map<Properties::PAGE, std::string> HtmlPageServer::pageMappings = {
+    {Properties::PAGE::index, "index.html"},
+    {Properties::PAGE::error, "error.html"}
+};
+
 HttpResponse* HtmlPageServer::ServeHtmlPage(std::string requestPath)
 {
     std::vector<std::string> pageSections;
     Properties::PAGE requestedPage = GetRequestedPage(requestPath);
     std::map<std::string, std::string> templateValues = GetPageTemplateValues(requestedPage);
 
+    std::string path = Properties::directoryMappings[Properties::DIRECTORY::htmlDir];
+
     //add page sections to vector
-    pageSections.push_back(FileInterface::ReadStringFromFile((Properties::directoryMappings[Properties::DIRECTORY::htmlDir] + "header.html").c_str()));
+    pageSections.push_back(FileInterface::ReadStringFromFile((path + "header.html").c_str()));
     pageSections.push_back(FileInterface::ReadStringFromFile((Properties::directoryMappings[Properties::DIRECTORY::htmlDir] + pageMappings[requestedPage]).c_str()));
     pageSections.push_back(FileInterface::ReadStringFromFile((Properties::directoryMappings[Properties::DIRECTORY::htmlDir] + "footer.html").c_str()));
 
@@ -25,11 +33,6 @@ HttpResponse* HtmlPageServer::ServeHtmlPage(std::string requestPath)
 
     //assign page response
     return new HttpResponse(200, pageTemplate.render(), Properties::contentTypeMappings[Properties::CONTENT_TYPE::textHtml]);
-}
-
-void HtmlPageServer::Configure()
-{
-    Properties::Configure();
 }
 
 void HtmlPageServer::InsertTemplateValues(Jinja2CppLight::Template* jinjaTemplate, std::map<std::string, std::string> values)

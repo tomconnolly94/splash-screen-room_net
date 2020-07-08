@@ -5,5 +5,4 @@
 class Index {
 public:
 	static void HandleRequest(CppWebServer::http_request* r);
-	static void ConfigureServer();
 };

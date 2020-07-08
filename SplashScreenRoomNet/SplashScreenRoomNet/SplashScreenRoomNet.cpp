@@ -3,6 +3,5 @@
 
 int main()
 {
-    Index::ConfigureServer();
     new CppWebServer::WebServer(8080, Index::HandleRequest);
 }

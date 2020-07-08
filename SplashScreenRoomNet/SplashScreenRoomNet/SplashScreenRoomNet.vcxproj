@@ -155,7 +155,6 @@
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp" />
     <ClCompile Include="HtmlPageServer.cpp" />
     <ClCompile Include="HttpResponse.cpp" />
-    <ClCompile Include="HttpResponse.h" />
     <ClCompile Include="Index.cpp" />
     <ClCompile Include="PageServer.cpp" />
     <ClCompile Include="Properties.cpp" />
@@ -167,6 +166,7 @@
     <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h" />
     <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h" />
     <ClInclude Include="HtmlPageServer.h" />
+    <ClCompile Include="HttpResponse.h" />
     <ClInclude Include="Index.h" />
     <ClInclude Include="PageServer.h" />
     <ClInclude Include="Properties.h" />

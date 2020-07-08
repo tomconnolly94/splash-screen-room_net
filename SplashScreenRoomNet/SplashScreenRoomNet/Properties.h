@@ -6,8 +6,6 @@
 
 static class Properties {
 public:
-	static void Configure();
-
 	static enum class CONTENT_TYPE
 	{
 		textHtml,

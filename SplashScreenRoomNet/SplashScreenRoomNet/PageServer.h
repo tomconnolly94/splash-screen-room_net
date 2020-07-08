@@ -12,7 +12,6 @@ public:
 	//functions
 	static HttpResponse* ServePage(std::string requestPath);
 	static std::vector<std::string> InterpretUrlSections(std::string urlPath);
-	static void Configure();
 	//properties
 	static std::vector<std::string> specialPaths;
 };

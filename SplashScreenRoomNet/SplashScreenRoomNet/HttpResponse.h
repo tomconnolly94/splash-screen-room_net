@@ -29,5 +29,5 @@ protected:
 	int _statusCode;
 	std::string _content;
 	std::string _contentType;
-	std::vector<int> _successCodeList;
+	static std::vector<int> _successCodeList;
 };
