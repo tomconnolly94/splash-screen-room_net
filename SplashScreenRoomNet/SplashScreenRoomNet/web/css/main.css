@@ -8,8 +8,19 @@ div#first p {
 
 img {
     width: 100%;
+    z-index: 90;
 }
 
-#main-container{
-    margin: auto 0;
+.grid-item{
+    text-align: center;
+    min-height: 200px;
+}
+
+.container{
+    margin-top: 20%;
+}
+
+a{
+    display:block;
+    z-index:100;
 }
