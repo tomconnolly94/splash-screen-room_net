@@ -1,10 +1,56 @@
-<div id="first">
+<!--<div id="first">
     <p>This is my {{avalue}} template.</p>
 </div>
 
 <div>
     <img src="/images/weeknd.png" />
-</div>
+</div>-->
+    <div id="title-area" class="jumbotron">
+        <h2>
+            Room net - Index
+        </h2>
+    </div>
 
-<script src="/js/main.js"></script>
-<script src="/node-modules/bootstrap.js"></script>
+        
+
+        <div class="container" id="main-container">
+            <div class="row">
+                <div class="col-sm grid-item">
+                    <a href="http://192.168.0.102:8081/" target="_blank" class="resource-link">
+                        <img src="/images/qbittorrent-logo.png" />
+                    </a>
+                </div>
+                <div class="col-sm grid-item">
+                    <a href="http://192.168.0.102:32400/web/index.html" class="resource-link">
+                        <img src="/images/plex-logo.png" />
+                    </a>
+                </div>
+                <div class="col-sm grid-item">
+                    <a href="http://192.168.0.102:19999/" class="resource-link">
+                        <img src="/images/netdata-logo.png" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm grid-item">
+                    <a href="http://192.168.0.102/admin/" class="resource-link">
+                        <img src="/images/pihole-logo.png" />
+                    </a>
+                </div>
+                <div class="col-sm grid-item">
+                    <a href="http://192.168.0.1/" class="resource-link">
+                        <img src="/images/tplink-logo.png" id="tp-link-image"/>
+                    </a>
+                </div>
+                <div class="col-sm grid-item">
+                    <a href="https://dakboard.com/options/index" class="resource-link">
+                        <img src="/images/dakboard-logo.png"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/main.js"></script>
+        <script src="/node-modules/jquery.js"></script>
+        <script src="/node-modules/bootstrap.js"></script>

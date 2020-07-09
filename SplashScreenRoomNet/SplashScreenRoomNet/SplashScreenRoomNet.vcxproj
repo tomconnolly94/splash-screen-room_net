@@ -153,15 +153,25 @@
   <ItemGroup>
     <ClCompile Include="..\..\Jinja2CppLight\src\Jinja2CppLight.cpp" />
     <ClCompile Include="..\..\Jinja2CppLight\src\stringhelper.cpp" />
+    <ClCompile Include="HtmlPageServer.cpp" />
+    <ClCompile Include="HttpResponse.cpp" />
     <ClCompile Include="Index.cpp" />
+    <ClCompile Include="PageServer.cpp" />
+    <ClCompile Include="Properties.cpp" />
     <ClCompile Include="SplashScreenRoomNet.cpp" />
     <ClCompile Include="SplashScreenRoomNetUtil.cpp" />
+    <ClCompile Include="StaticFileServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Jinja2CppLight\src\Jinja2CppLight.h" />
     <ClInclude Include="..\..\Jinja2CppLight\src\stringhelper.h" />
+    <ClInclude Include="HtmlPageServer.h" />
+    <ClCompile Include="HttpResponse.h" />
     <ClInclude Include="Index.h" />
+    <ClInclude Include="PageServer.h" />
+    <ClInclude Include="Properties.h" />
     <ClInclude Include="SplashScreenRoomNetUtil.h" />
+    <ClInclude Include="StaticFileServer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web\css\main.css" />
@@ -172,10 +182,13 @@
     <None Include="web\js\main.js" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="web\images\weeknd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="image.txt" />
+    <Image Include="web\images\dakboard-logo.png" />
+    <Image Include="web\images\favicon.ico" />
+    <Image Include="web\images\netdata-logo.png" />
+    <Image Include="web\images\pihole-logo.png" />
+    <Image Include="web\images\plex-logo.png" />
+    <Image Include="web\images\qbittorrent-logo.png" />
+    <Image Include="web\images\tplink-logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
