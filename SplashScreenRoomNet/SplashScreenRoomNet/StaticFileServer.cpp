@@ -55,6 +55,10 @@ HttpResponse* StaticFileServer::ServeExternalLibFile(std::string requestedFile, 
     {
         httpResponse->SetContentType(Properties::CONTENT_TYPE::textCss);
     }
+    else if (fileExtension == "map")
+    {
+        httpResponse->SetContentType(Properties::CONTENT_TYPE::textCss);
+    }
     else {
         httpResponse->SetError();
     }
@@ -95,21 +99,24 @@ std::string StaticFileServer::CreateHtmlOutputForBinary(const std::string& fullP
 
 std::string StaticFileServer::FindExistingFile(std::string requestedFile)
 {
-    std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedFile);
-    std::string fileNameWithoutExtension = requestedFile.substr(0, requestedFile.size() - fileExtension.size() - 1);
+    std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedFile, false);
+    std::vector<std::string> possibleSubDirs = { "", "/js", "/css" };
     std::vector<std::string> possibleTargetDirs;
-    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/" + fileExtension + "/");
-    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/");
+    std::string fileNameWithoutExtension = requestedFile.substr(0, requestedFile.size() - fileExtension.size() - 1);
+
+    for (std::string subDir : possibleSubDirs)
+    {
+        possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist" + subDir + "/");
+    }
 
     std::string fullFileWithPath;
-    bool fileFound = false;
 
     for (std::string targetDir : possibleTargetDirs)
     {
-        if (SplashScreenRoomNetUtil::FileExists(targetDir + requestedFile))
+        std::string possibleFileLocation = targetDir + requestedFile;
+        if (SplashScreenRoomNetUtil::FileExists(possibleFileLocation))
         {
-            fileFound = true;
-            return targetDir + fileNameWithoutExtension + "." + fileExtension;
+            return possibleFileLocation;
         }
     }
     return "";

@@ -20,6 +20,7 @@ std::map<Properties::CONTENT_TYPE, std::string> Properties::contentTypeMappings 
 		{ CONTENT_TYPE::imagePng, "image/png"},
 		{ CONTENT_TYPE::imageIcon, "image/icon"},
 		{ CONTENT_TYPE::plaintext, "text/plain"},
+		{ CONTENT_TYPE::appOctetStream, "application/octet-stream"},
 };
 
 std::map<Properties::CONTENT_TYPE, Properties::DIRECTORY> Properties::contentTypeDirectoryMappings = {

@@ -13,7 +13,8 @@ public:
 		appJs,
 		imagePng,
 		imageIcon,
-		plaintext
+		plaintext,
+		appOctetStream
 	};
 
 	static enum class PAGE
