@@ -1,5 +1,5 @@
 //external include
-//#include <algorithm>
+#include <algorithm>
 
 //internal includes
 #include "HttpResponse.h"

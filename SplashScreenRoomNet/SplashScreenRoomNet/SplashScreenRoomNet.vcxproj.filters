@@ -129,8 +129,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="web\images\weeknd.png">
-      <Filter>web\images</Filter>
+    <Image Include="web\images\qbittorrent-logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\favicon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\plex-logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\dakboard-logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\netdata-logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\pihole-logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="web\images\tplink-logo.png">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>

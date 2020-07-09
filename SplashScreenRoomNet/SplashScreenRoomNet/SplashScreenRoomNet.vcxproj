@@ -182,7 +182,13 @@
     <None Include="web\js\main.js" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="web\images\weeknd.png" />
+    <Image Include="web\images\dakboard-logo.png" />
+    <Image Include="web\images\favicon.ico" />
+    <Image Include="web\images\netdata-logo.png" />
+    <Image Include="web\images\pihole-logo.png" />
+    <Image Include="web\images\plex-logo.png" />
+    <Image Include="web\images\qbittorrent-logo.png" />
+    <Image Include="web\images\tplink-logo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

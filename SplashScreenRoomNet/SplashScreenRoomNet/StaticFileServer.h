@@ -11,4 +11,6 @@ public:
 	static HttpResponse* ServeFile(std::string requestedPage, Properties::CONTENT_TYPE contentType);
 	static HttpResponse* ServeExternalLibFile(std::string requestedPage, Properties::CONTENT_TYPE contentType);
 	static std::string CreateHtmlOutputForBinary(const std::string& fullPath);
+private:
+	static std::string FindExistingFile(std::string requestedFile);
 };

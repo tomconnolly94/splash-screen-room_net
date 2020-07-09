@@ -1,4 +1,3 @@
-
 //external includes
 #include <sstream>
 
@@ -34,36 +33,19 @@ HttpResponse* StaticFileServer::ServeFile(std::string requestedPage, Properties:
     return new HttpResponse(202, CreateHtmlOutputForBinary(targetFile.c_str()), Properties::contentTypeMappings[contentType]);
 }
 
-HttpResponse* StaticFileServer::ServeExternalLibFile(std::string requestedPage, Properties::CONTENT_TYPE contentType)
+HttpResponse* StaticFileServer::ServeExternalLibFile(std::string requestedFile, Properties::CONTENT_TYPE contentType)
 {
-    std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedPage);
-    std::string fileNameWithoutExtension = requestedPage.substr(0, requestedPage.size() - fileExtension.size() - 1);
-    std::vector<std::string> possibleTargetDirs;
-    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/" + fileExtension + "/");
-    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/");
+    std::string fullFileWithPath = FindExistingFile(requestedFile);
 
-
-    std::string fullFileWithPath;
-    bool fileFound = false;
-
-    for (std::string targetDir : possibleTargetDirs)
-    {
-        if (SplashScreenRoomNetUtil::FileExists(targetDir + requestedPage))
-        {
-            fileFound = true;
-            fullFileWithPath = targetDir + fileNameWithoutExtension + "." + fileExtension;
-        }
-    }
-
-    if (!fileFound)
+    if (fullFileWithPath == "")
     {
         return new HttpResponse(404, "Requested file does not exist.", Properties::contentTypeMappings[Properties::CONTENT_TYPE::plaintext]);
     }
 
     HttpResponse* httpResponse = new HttpResponse();
-
     httpResponse->SetContent(FileInterface::ReadStringFromFile(fullFileWithPath.c_str()));
     httpResponse->SetStatusCode(200);
+    std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedFile);
 
     if (fileExtension == "js")
     {
@@ -82,13 +64,9 @@ HttpResponse* StaticFileServer::ServeExternalLibFile(std::string requestedPage, 
 std::string StaticFileServer::CreateHtmlOutputForBinary(const std::string& fullPath)
 {
     const char* file_name = fullPath.c_str();
-
     FILE* file_stream = fopen(file_name, "rb");
-
     std::string file_str;
-
     size_t file_size;
-
 
     if (file_stream != nullptr)
     {
@@ -98,7 +76,6 @@ std::string StaticFileServer::CreateHtmlOutputForBinary(const std::string& fullP
         rewind(file_stream);
 
         buffer.resize(file_length);
-
         file_size = fread(&buffer[0], 1, file_length, file_stream);
 
         std::stringstream ss;
@@ -114,4 +91,26 @@ std::string StaticFileServer::CreateHtmlOutputForBinary(const std::string& fullP
         printf("file_stream is null! file name -> %s\n", file_name);
     }
     return ""; //html;
+}
+
+std::string StaticFileServer::FindExistingFile(std::string requestedFile)
+{
+    std::string fileExtension = SplashScreenRoomNetUtil::GetExtension(requestedFile);
+    std::string fileNameWithoutExtension = requestedFile.substr(0, requestedFile.size() - fileExtension.size() - 1);
+    std::vector<std::string> possibleTargetDirs;
+    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/" + fileExtension + "/");
+    possibleTargetDirs.push_back(Properties::directoryMappings[Properties::DIRECTORY::nodeModulesDir] + fileNameWithoutExtension + "/dist/");
+
+    std::string fullFileWithPath;
+    bool fileFound = false;
+
+    for (std::string targetDir : possibleTargetDirs)
+    {
+        if (SplashScreenRoomNetUtil::FileExists(targetDir + requestedFile))
+        {
+            fileFound = true;
+            return targetDir + fileNameWithoutExtension + "." + fileExtension;
+        }
+    }
+    return "";
 }

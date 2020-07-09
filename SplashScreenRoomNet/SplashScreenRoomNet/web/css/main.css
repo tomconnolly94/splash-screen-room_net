@@ -1,4 +1,4 @@
-body{
+body {
     background-color: black;
 }
 
@@ -11,16 +11,28 @@ img {
     z-index: 90;
 }
 
-.grid-item{
+.grid-item {
     text-align: center;
     min-height: 200px;
 }
 
 .container{
-    margin-top: 20%;
+    margin-top: 5%;
 }
 
 a{
     display:block;
     z-index:100;
+}
+
+#title-area{
+    text-align:center;
+}
+
+#tp-link-image{
+    margin-top:25%;
+}
+
+div.jumbotron{
+    padding: 1rem;
 }
