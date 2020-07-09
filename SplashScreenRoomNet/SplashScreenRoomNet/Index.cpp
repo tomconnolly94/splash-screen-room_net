@@ -2,7 +2,6 @@
 #include "Index.h"
 #include "PageServer.h"
 #include "HttpResponse.h"
-#include "HttpResponse.cpp"
 
 void Index::HandleRequest(CppWebServer::http_request* httpRequest)
 {
